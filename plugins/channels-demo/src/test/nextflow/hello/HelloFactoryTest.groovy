@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-plugins {
-    // required to download the toolchain (jdk) from a remote repository
-    // https://github.com/gradle/foojay-toolchains
-    // https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
-}
+package nextflow.hello
 
-rootProject.name = 'channels-demo'
-include('plugins')
-include('plugins:channels-demo')
+import nextflow.Session
+import spock.lang.Specification
+
+/**
+ *
+ * @author Paolo Di Tommaso <paolo.ditommaso@gmail.com>
+ */
+class HelloFactoryTest extends Specification {
+
+    def 'should return observer' () {
+        when:
+        def result = new HelloFactory().create(Mock(Session))
+        then:
+        result.size()==1
+        result[0] instanceof HelloObserver
+    }
+
+}

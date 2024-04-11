@@ -1,11 +1,13 @@
 
 config ?= compileClasspath
+version ?= $(shell grep 'Plugin-Version' plugins/channels-demo/src/resources/META-INF/MANIFEST.MF | awk '{ print $$2 }')
 
-ifdef module 
+
+ifdef module
 mm = :${module}:
-else 
-mm = 
-endif 
+else
+mm =
+endif
 
 clean:
 	rm -rf .nextflow*
@@ -36,7 +38,7 @@ deps-all:
 # Refresh SNAPSHOTs dependencies
 #
 refresh:
-	./gradlew --refresh-dependencies 
+	./gradlew --refresh-dependencies
 
 #
 # Run all tests or selected ones
@@ -47,6 +49,11 @@ ifndef class
 else
 	./gradlew ${mm}test --tests ${class}
 endif
+
+install:
+	./gradlew copyPluginZip
+	rm -rf ${HOME}/.nextflow/plugins/channels-demo-${version}
+	cp -r build/plugins/channels-demo-${version} ${HOME}/.nextflow/plugins/
 
 assemble:
 	./gradlew assemble

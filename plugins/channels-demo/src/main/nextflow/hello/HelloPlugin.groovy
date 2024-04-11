@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-plugins {
-    // required to download the toolchain (jdk) from a remote repository
-    // https://github.com/gradle/foojay-toolchains
-    // https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
-}
+package nextflow.hello
 
-rootProject.name = 'channels-demo'
-include('plugins')
-include('plugins:channels-demo')
+import groovy.transform.CompileStatic
+import nextflow.plugin.BasePlugin
+import nextflow.plugin.Scoped
+import org.pf4j.PluginWrapper
+
+/**
+ * Implements the Hello plugins entry point
+ *
+ * @author Paolo Di Tommaso <paolo.ditommaso@gmail.com>
+ */
+@CompileStatic
+class HelloPlugin extends BasePlugin {
+
+    HelloPlugin(PluginWrapper wrapper) {
+        super(wrapper)
+    }
+}
